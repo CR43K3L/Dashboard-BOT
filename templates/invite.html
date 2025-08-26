@@ -1,0 +1,20 @@
+{% extends 'base.html' %}{% block content %}
+<h1 class="text-2xl font-bold mb-4">Inviter le bot</h1>
+<p class="opacity-80 mb-4">Le lien ci-dessous te laissera choisir un serveur où tu as <em>Gérer le serveur</em>.
+<br>Permissions demandées: <code>{{ perms }}</code></p>
+
+<div class="flex flex-col md:flex-row gap-3">
+  <a class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500" href="{{ invite_url }}">➕ Choisir un serveur…</a>
+  <div class="grow"></div>
+</div>
+
+<h2 class="text-lg font-semibold mt-8 mb-3">Installer directement sur…</h2>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+  {% for g in guilds %}
+    + <a class="card p-3" href="/invite?guild_id={{ g.id }}"></a>
+      <div class="font-medium">{{ g.name }}</div>
+      <div class="opacity-50 text-xs">ID: {{ g.id }}</div>
+    </a>
+  {% endfor %}
+</div>
+{% endblock %}

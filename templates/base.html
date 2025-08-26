@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title or PANEL_NAME or 'Bot Panel' }}</title>
+
+  <!-- Tailwind CDN (utilitaires prêts à l’emploi) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --bg: #0b0e12;
+      --panel: #0f141b;
+      --muted: #a8b1c0;
+      --bdr: rgba(255,255,255,.10);
+      --bdr-2: rgba(255,255,255,.18);
+      --primary-1:#7c3aed; /* violet */
+      --primary-2:#06b6d4; /* cyan   */
+    }
+
+    /* fond “néon” discret */
+    body{
+      background:
+        radial-gradient(1200px 600px at 8% -10%, rgba(124,58,237,.14), transparent 55%),
+        radial-gradient(900px 500px at 92% 0%,   rgba(6,182,212,.12), transparent 55%),
+        var(--bg);
+      color: #e8ecf3;
+    }
+
+    /* header verre */
+    .header{
+      backdrop-filter: saturate(140%) blur(10px);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      border-bottom: 1px solid var(--bdr);
+    }
+
+    /* petit badge rond marque */
+    .brand-dot{
+      width: 28px; height: 28px; border-radius: 9999px;
+      background: conic-gradient(from 210deg, var(--primary-1), var(--primary-2));
+      box-shadow: 0 0 22px rgba(124,58,237,.45);
+    }
+
+    /* boutons */
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center; /* centre horizontalement */
+      gap: .5rem;
+      padding: .68rem 1.05rem; /* padding équilibré */
+      border-radius: 12px;
+      border: 1px solid var(--bdr);
+      background: rgba(255,255,255,.04);
+      transition: transform .15s, filter .2s, background .2s, border-color .2s;
+      line-height: 1; /* centre verticalement */
+    }
+    .btn:hover{ border-color: var(--bdr-2); transform: translateY(-1px); }
+    .btn:active{ transform: translateY(0); }
+
+    .btn-primary{
+      background: linear-gradient(135deg, var(--primary-1), var(--primary-2));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 10px 30px -12px rgba(6,182,212,.45), 0 6px 18px -10px rgba(124,58,237,.35);
+    }
+    .btn-primary:hover{ filter: brightness(1.06); }
+
+    /* cartes / blocs */
+    .card{
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--bdr);
+      border-radius: 16px;
+      transition: transform .18s, border-color .2s, background .2s;
+    }
+    .card:hover{ transform: translateY(-1px); border-color: var(--bdr-2); }
+
+    /* tag version */
+    .tag{
+      font-size: .70rem;
+      padding: .15rem .45rem;
+      border: 1px solid var(--bdr);
+      border-radius: .6rem;
+      color: #d6dbea;
+      background: rgba(255,255,255,.05);
+    }
+
+    /* limite largeur */
+    .shell{ max-width: 1280px; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header sticky top-0 z-40">
+    <div class="shell mx-auto w-full px-4 md:px-6 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 hover:opacity-90">
+        <span class="brand-dot"></span>
+        <span class="font-semibold tracking-tight">
+          {{ PANEL_NAME or 'Bot Panel' }}
+        </span>
+        <span class="tag">v{{ PANEL_VERSION or '1' }}</span>
+      </a>
+
+      <nav class="flex items-center gap-2">
+        {% if user %}
+          <!-- bouton parfaitement centré -->
+          <a href="/invite" class="btn btn-primary min-w-[160px]">Inviter le bot</a>
+          <span class="hidden sm:block text-sm text-zinc-300/80 px-2">
+            {{ user.username }}#{{ user.discriminator }}
+          </span>
+          <a href="/logout" class="btn">Déconnexion</a>
+        {% else %}
+          <a href="/login" class="btn btn-primary">Se connecter</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenu -->
+  <main class="shell mx-auto w-full px-4 md:px-6 py-8">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer simple -->
+  <footer class="shell mx-auto w-full px-4 md:px-6 pb-8">
+    <div class="border-t border-white/10 pt-4 text-xs text-zinc-400/70 flex items-center justify-between">
+      <span>{{ PANEL_NAME or 'Bot Panel' }}</span>
+      <span class="opacity-70">Interface © {{ (PANEL_NAME or 'Panel') }}</span>
+    </div>
+  </footer>
+
+</body>
+</html>

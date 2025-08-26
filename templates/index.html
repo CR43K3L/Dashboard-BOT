@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="grid md:grid-cols-2 gap-8 items-center">
+  <div class="space-y-5">
+    <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+      Contrôle total de ton <span class="text-transparent bg-clip-text"
+        style="background-image:linear-gradient(90deg,var(--accent),var(--primary))">bot Discord</span>
+    </h1>
+    <p class="opacity-80">Design néon, navigation simple, tout ce qu’il faut pour gérer : configs, tickets, banques, coffre et publications.</p>
+    <div class="flex gap-3">
+      {% if user %}
+        <a href="/dashboard" class="btn btn-primary">Aller au dashboard</a>
+      {% else %}
+        <a href="/login" class="btn btn-primary">Se connecter</a>
+        <a href="/invite" class="btn">Inviter le bot</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="relative">
+    <div class="card p-6">
+      <div class="text-sm opacity-75 mb-3">Fonctionnalités</div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="glass p-4 rounded-xl">
+          <div class="text-2xl">⚙️</div><div class="mt-1 text-sm opacity-80">Configuration</div>
+        </div>
+        <div class="glass p-4 rounded-xl">
+          <div class="text-2xl">🎟️</div><div class="mt-1 text-sm opacity-80">Tickets & macros</div>
+        </div>
+        <div class="glass p-4 rounded-xl">
+          <div class="text-2xl">🏦</div><div class="mt-1 text-sm opacity-80">Banque & preuves</div>
+        </div>
+        <div class="glass p-4 rounded-xl">
+          <div class="text-2xl">🧰</div><div class="mt-1 text-sm opacity-80">Coffre</div>
+        </div>
+      </div>
+    </div>
+    <div class="absolute -right-6 -bottom-6 w-24 h-24 rounded-full blur-xl opacity-40"
+         style="background:radial-gradient(circle,var(--primary) 0%,transparent 60%);"></div>
+  </div>
+</section>
+{% endblock %}
